@@ -1,0 +1,36 @@
+name: Python CI
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v6
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Ejecutar pruebas unitarias
+        run: pytest -v
+
+      - name: Sello de Victoria
+        if: ${{ success() }}
+        run: |
+          echo '    /\_/\ '
+          echo '   ( o.o )'
+          echo '    > ^ < '
+          echo '¡VICTORIA! Todas las pruebas pasaron.'
